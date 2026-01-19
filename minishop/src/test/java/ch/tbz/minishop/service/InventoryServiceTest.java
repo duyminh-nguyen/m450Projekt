@@ -1,0 +1,19 @@
+package ch.tbz.minishop.service;
+
+import ch.tbz.minishop.domain.Product;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+class InventoryServiceTest {
+
+    @Test
+    void placeOrder_reducesStock() {
+        InventoryService service = new InventoryService();
+        service.addProduct(new Product("SKU-1", 1000, 5));
+
+        service.placeOrder("ORDER-1", "SKU-1", 2);
+
+        assertEquals(3, service.getProduct("SKU-1").stock());
+    }
+}
