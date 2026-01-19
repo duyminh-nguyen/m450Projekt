@@ -23,5 +23,7 @@ public class InventoryService {
         Product p = getProduct(sku);
         int newStock = p.stock() - quantity;
         products.put(sku, new Product(p.sku(), p.priceCents(), newStock));
+        if (quantity <= 0) throw new IllegalArgumentException("quantity must be > 0");
+        if (newStock < 0) throw new IllegalStateException("Insufficient stock");
     }
 }
