@@ -1,41 +1,43 @@
-name: Backend CI
+name: MiniShop CI
 
 on:
   push:
+    paths:
+      - "minishop/**"
+      - ".github/workflows/ci.yml"
   pull_request:
+    paths:
+      - "minishop/**"
+      - ".github/workflows/ci.yml"
 
 jobs:
-  build-and-test:
+  build-test:
     runs-on: ubuntu-latest
-
     defaults:
       run:
-        working-directory: recipe-planner-backend
+        working-directory: minishop
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Set up JDK 17
+      - name: Set up JDK
         uses: actions/setup-java@v4
         with:
           distribution: temurin
-          java-version: 17
+          java-version: "17"
           cache: maven
 
-      - name: Run unit tests
-        run: mvn clean verify
+      - name: Build & Test (Surefire + JaCoCo)
+        run: mvn -B clean verify
 
-      - name: Upload Surefire test reports
-        if: always()
+      - name: Upload Surefire Reports
         uses: actions/upload-artifact@v4
         with:
           name: surefire-reports
-          path: recipe-planner-backend/target/surefire-reports
+          path: minishop/target/surefire-reports
 
-      - name: Upload JaCoCo coverage report
-        if: always()
+      - name: Upload JaCoCo Report
         uses: actions/upload-artifact@v4
         with:
           name: jacoco-report
-          path: recipe-planner-backend/target/site/jacoco
+          path: minishop/target/site/jacoco
