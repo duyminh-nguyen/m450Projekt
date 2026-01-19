@@ -26,4 +26,14 @@ class InventoryServiceTest {
                 () -> service.placeOrder("ORDER-1", "SKU-1", 2));
     }
 
+    @Test
+    void cancelOrder_restoresStock() {
+        InventoryService service = new InventoryService();
+        service.addProduct(new Product("SKU-1", 1000, 5));
+
+        service.placeOrder("ORDER-1", "SKU-1", 2);
+        service.cancelOrder("ORDER-1");
+
+        assertEquals(5, service.getProduct("SKU-1").stock());
+    }
 }
