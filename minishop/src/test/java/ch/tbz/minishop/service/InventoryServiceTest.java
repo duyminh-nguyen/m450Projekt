@@ -16,4 +16,14 @@ class InventoryServiceTest {
 
         assertEquals(3, service.getProduct("SKU-1").stock());
     }
+
+    @Test
+    void placeOrder_throwsIfInsufficientStock() {
+        InventoryService service = new InventoryService();
+        service.addProduct(new Product("SKU-1", 1000, 1));
+
+        org.junit.jupiter.api.Assertions.assertThrows(IllegalStateException.class,
+                () -> service.placeOrder("ORDER-1", "SKU-1", 2));
+    }
+
 }
