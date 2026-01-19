@@ -1,4 +1,3 @@
-```markdown
 # Testkonzept – MiniShop Inventory & Orders
 
 ## 1. Ziel
@@ -114,4 +113,3 @@ Belege im Repository:
 
 ---
 **Ergebnis:** Das Projekt erfüllt die Kriterien zu Testkonzept, Unit-/Komponententests, TDD-Nachweis, Mocking sowie CI mit Reports.
-```
